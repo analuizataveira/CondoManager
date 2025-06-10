@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Ordens de Serviço</h2>
+<ul>
+  {% for ordem in ordens %}
+    <li>{{ ordem.tipo }} - {{ ordem.descricao }} ({{ ordem.status }})</li>
+  {% endfor %}
+</ul>
+{% endblock %}
