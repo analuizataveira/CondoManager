@@ -1,9 +1,54 @@
 {% extends "base.html" %}
+
+{% block title %}Ordens de Serviço - CondoManager{% endblock %}
+
 {% block content %}
-<h2>Ordens de Serviço</h2>
-<ul>
-  {% for ordem in ordens %}
-    <li>{{ ordem.tipo }} - {{ ordem.descricao }} ({{ ordem.status }})</li>
-  {% endfor %}
-</ul>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>📋 Ordens de Serviço</h2>
+    <a href="{{ url_for('nova_ordem') }}" class="btn btn-success">+ Nova Ordem</a>
+</div>
+
+{% if ordens %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Tipo</th>
+                <th>Descrição</th>
+                <th>Status</th>
+                <th>Data Agendada</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ordem in ordens %}
+            <tr>
+                <td>{{ ordem.id }}</td>
+                <td>{{ ordem.tipo }}</td>
+                <td>{{ ordem.descricao }}</td>
+                <td>
+                    <span class="badge bg-{% if ordem.status == 'Concluído' %}success{% elif ordem.status == 'Em Andamento' %}warning{% else %}secondary{% endif %}">
+                        {{ ordem.status }}
+                    </span>
+                </td>
+                <td>{{ ordem.data_agendada }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('deletar_ordem', ordem_id=ordem.id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja deletar esta ordem?');">
+                        <button type="submit" class="btn btn-danger btn-sm">🗑️ Deletar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">Nenhuma ordem encontrada</h4>
+    <p>Não há ordens de serviço cadastradas no momento.</p>
+    <hr>
+    <a href="{{ url_for('nova_ordem') }}" class="btn btn-primary">Criar primeira ordem</a>
+</div>
+{% endif %}
 {% endblock %}

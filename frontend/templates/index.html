@@ -1,5 +1,38 @@
 {% extends "base.html" %}
+
+{% block title %}Início - CondoManager{% endblock %}
+
 {% block content %}
-<h1>Bem-vindo ao Sistema de Gestão Predial</h1>
-<p>Use o menu acima para navegar.</p>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h1 class="display-4 text-primary">🏢 CondoManager</h1>
+        <p class="lead">Sistema de Gerenciamento de Condomínios</p>
+        <hr class="my-4">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">📋 Ordens de Serviço</h5>
+                <p class="card-text">Gerencie e agende serviços de manutenção do condomínio.</p>
+                <a href="{{ url_for('listar_ordens') }}" class="btn btn-primary">Ver Ordens</a>
+                <a href="{{ url_for('nova_ordem') }}" class="btn btn-success">Nova Ordem</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">👷 Fornecedores</h5>
+                <p class="card-text">Cadastre e gerencie fornecedores de serviços.</p>
+                <a href="{{ url_for('listar_fornecedores') }}" class="btn btn-primary">Ver Fornecedores</a>
+                <a href="{{ url_for('novo_fornecedor') }}" class="btn btn-success">Novo Fornecedor</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

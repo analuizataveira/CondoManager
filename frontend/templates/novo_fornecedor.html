@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Novo Fornecedor - CondoManager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3>👷 Novo Fornecedor</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome do Fornecedor</label>
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Ex: João Silva Elétrica" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="especialidade" class="form-label">Especialidade</label>
+                        <select class="form-select" id="especialidade" name="especialidade" required>
+                            <option value="">Selecione...</option>
+                            <option value="Elétrica">Elétrica</option>
+                            <option value="Hidráulica">Hidráulica</option>
+                            <option value="Pintura">Pintura</option>
+                            <option value="Jardinagem">Jardinagem</option>
+                            <option value="Limpeza">Limpeza</option>
+                            <option value="Segurança">Segurança</option>
+                            <option value="Elevador">Elevador</option>
+                            <option value="Ar Condicionado">Ar Condicionado</option>
+                            <option value="Dedetização">Dedetização</option>
+                            <option value="Portaria">Portaria</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="contato" class="form-label">Contato</label>
+                        <input type="text" class="form-control" id="contato" name="contato" placeholder="Ex: (11) 99999-9999 ou email@exemplo.com" required>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('listar_fornecedores') }}" class="btn btn-secondary me-md-2">Cancelar</a>
+                        <button type="submit" class="btn btn-success">Cadastrar Fornecedor</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
