@@ -42,6 +42,7 @@
                 </td>
                 <td>{{ ordem.data_agendada }}</td>
                 <td>
+                    <a href="{{ url_for('editar_ordem', ordem_id=ordem.id) }}" class="btn btn-primary btn-sm me-2">✏️ Editar</a>
                     <form method="POST" action="{{ url_for('deletar_ordem', ordem_id=ordem.id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja deletar esta ordem?');">
                         <button type="submit" class="btn btn-danger btn-sm">🗑️ Deletar</button>
                     </form>

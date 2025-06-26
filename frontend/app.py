@@ -50,6 +50,47 @@ def nova_ordem():
     
     return render_template("nova_ordem.html", fornecedores=fornecedores)
 
+@app.route('/ordens/<int:ordem_id>/editar', methods=['GET', 'POST'])
+def editar_ordem(ordem_id):
+    if request.method == 'POST':
+        dados = {
+            "tipo": request.form['tipo'],
+            "descricao": request.form['descricao'],
+            "status": request.form['status'],
+            "data_agendada": request.form['data_agendada'],
+            "fornecedor_id": int(request.form['fornecedor_id']) if request.form['fornecedor_id'] else None
+        }
+        try:
+            response = requests.put(f"{API_URL}/ordens/{ordem_id}", json=dados)
+            if response.status_code == 200:
+                flash("Ordem de serviço atualizada com sucesso!", "success")
+                return redirect(url_for('listar_ordens'))
+            else:
+                flash("Erro ao atualizar ordem de serviço", "error")
+        except requests.exceptions.RequestException:
+            flash("Erro ao conectar com a API", "error")
+    
+    # Carregar dados da ordem atual
+    try:
+        response = requests.get(f"{API_URL}/ordens/{ordem_id}")
+        if response.status_code == 200:
+            ordem = response.json()
+        else:
+            flash("Ordem não encontrada", "error")
+            return redirect(url_for('listar_ordens'))
+    except requests.exceptions.RequestException:
+        flash("Erro ao conectar com a API", "error")
+        return redirect(url_for('listar_ordens'))
+    
+    # Carregar fornecedores para o dropdown
+    try:
+        response = requests.get(f"{API_URL}/fornecedores")
+        fornecedores = response.json() if response.status_code == 200 else []
+    except requests.exceptions.RequestException:
+        fornecedores = []
+    
+    return render_template("editar_ordem.html", ordem=ordem, fornecedores=fornecedores)
+
 @app.route('/ordens/<int:ordem_id>/deletar', methods=['POST'])
 def deletar_ordem(ordem_id):
     try:

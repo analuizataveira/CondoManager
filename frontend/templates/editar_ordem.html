@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Ordem - CondoManager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3>✏️ Editar Ordem de Serviço #{{ ordem.id }}</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="tipo" class="form-label">Tipo de Serviço</label>
+                        <select class="form-select" id="tipo" name="tipo" required>
+                            <option value="">Selecione...</option>
+                            <option value="Elétrica" {{ 'selected' if ordem.tipo == 'Elétrica' else '' }}>Elétrica</option>
+                            <option value="Hidráulica" {{ 'selected' if ordem.tipo == 'Hidráulica' else '' }}>Hidráulica</option>
+                            <option value="Pintura" {{ 'selected' if ordem.tipo == 'Pintura' else '' }}>Pintura</option>
+                            <option value="Jardinagem" {{ 'selected' if ordem.tipo == 'Jardinagem' else '' }}>Jardinagem</option>
+                            <option value="Limpeza" {{ 'selected' if ordem.tipo == 'Limpeza' else '' }}>Limpeza</option>
+                            <option value="Segurança" {{ 'selected' if ordem.tipo == 'Segurança' else '' }}>Segurança</option>
+                            <option value="Elevador" {{ 'selected' if ordem.tipo == 'Elevador' else '' }}>Elevador</option>
+                            <option value="Ar Condicionado" {{ 'selected' if ordem.tipo == 'Ar Condicionado' else '' }}>Ar Condicionado</option>
+                            <option value="Outros" {{ 'selected' if ordem.tipo == 'Outros' else '' }}>Outros</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <textarea class="form-control" id="descricao" name="descricao" rows="3" placeholder="Descreva o serviço necessário..." required>{{ ordem.descricao }}</textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="fornecedor_id" class="form-label">Fornecedor (Opcional)</label>
+                        <select class="form-select" id="fornecedor_id" name="fornecedor_id">
+                            <option value="">Nenhum fornecedor selecionado</option>
+                            {% for fornecedor in fornecedores %}
+                            <option value="{{ fornecedor.id }}" {{ 'selected' if ordem.fornecedor and ordem.fornecedor.id == fornecedor.id else '' }}>
+                                {{ fornecedor.nome }} - {{ fornecedor.especialidade }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" id="status" name="status" required>
+                            <option value="Pendente" {{ 'selected' if ordem.status == 'Pendente' else '' }}>Pendente</option>
+                            <option value="Em Andamento" {{ 'selected' if ordem.status == 'Em Andamento' else '' }}>Em Andamento</option>
+                            <option value="Concluído" {{ 'selected' if ordem.status == 'Concluído' else '' }}>Concluído</option>
+                            <option value="Cancelado" {{ 'selected' if ordem.status == 'Cancelado' else '' }}>Cancelado</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="data_agendada" class="form-label">Data Agendada</label>
+                        <input type="date" class="form-control" id="data_agendada" name="data_agendada" value="{{ ordem.data_agendada }}" required>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('listar_ordens') }}" class="btn btn-secondary me-md-2">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Atualizar Ordem</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
