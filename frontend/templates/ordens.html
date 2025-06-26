@@ -16,6 +16,7 @@
                 <th>ID</th>
                 <th>Tipo</th>
                 <th>Descrição</th>
+                <th>Fornecedor</th>
                 <th>Status</th>
                 <th>Data Agendada</th>
                 <th>Ações</th>
@@ -27,6 +28,13 @@
                 <td>{{ ordem.id }}</td>
                 <td>{{ ordem.tipo }}</td>
                 <td>{{ ordem.descricao }}</td>
+                <td>
+                    {% if ordem.fornecedor %}
+                        <span class="badge bg-info">{{ ordem.fornecedor.nome }}</span>
+                    {% else %}
+                        <span class="text-muted">Não atribuído</span>
+                    {% endif %}
+                </td>
                 <td>
                     <span class="badge bg-{% if ordem.status == 'Concluído' %}success{% elif ordem.status == 'Em Andamento' %}warning{% else %}secondary{% endif %}">
                         {{ ordem.status }}

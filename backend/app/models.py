@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
+from sqlalchemy.orm import relationship
 from .database import Base
 
 class OrdemDeServico(Base):
@@ -9,6 +10,10 @@ class OrdemDeServico(Base):
     descricao = Column(String)
     status = Column(String)
     data_agendada = Column(Date)
+    fornecedor_id = Column(Integer, ForeignKey("fornecedores.id"), nullable=True)
+    
+    # Relacionamento
+    fornecedor = relationship("Fornecedor", back_populates="ordens")
 
 class Fornecedor(Base):
     __tablename__ = "fornecedores"
@@ -17,3 +22,6 @@ class Fornecedor(Base):
     nome = Column(String, nullable=False)
     especialidade = Column(String)
     contato = Column(String)
+    
+    # Relacionamento
+    ordens = relationship("OrdemDeServico", back_populates="fornecedor")

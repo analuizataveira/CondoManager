@@ -107,6 +107,7 @@ CondoManager/
 - descricao (String)
 - status (String)
 - data_agendada (Date)
+- fornecedor_id (Foreign Key - OPCIONAL)
 
 **Tabela: fornecedores**
 - id (Primary Key)
@@ -114,6 +115,6 @@ CondoManager/
 - especialidade (String)  
 - contato (String)
 
-## 👥 Autor
 
+## 👥 Autor
 Projeto desenvolvido como requisito da disciplina C216 - Inatel

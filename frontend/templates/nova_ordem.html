@@ -33,6 +33,16 @@
                     </div>
                     
                     <div class="mb-3">
+                        <label for="fornecedor_id" class="form-label">Fornecedor (Opcional)</label>
+                        <select class="form-select" id="fornecedor_id" name="fornecedor_id">
+                            <option value="">Nenhum fornecedor selecionado</option>
+                            {% for fornecedor in fornecedores %}
+                            <option value="{{ fornecedor.id }}">{{ fornecedor.nome }} - {{ fornecedor.especialidade }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
                         <label for="status" class="form-label">Status</label>
                         <select class="form-select" id="status" name="status" required>
                             <option value="Pendente">Pendente</option>

@@ -28,7 +28,8 @@ def nova_ordem():
             "tipo": request.form['tipo'],
             "descricao": request.form['descricao'],
             "status": request.form['status'],
-            "data_agendada": request.form['data_agendada']
+            "data_agendada": request.form['data_agendada'],
+            "fornecedor_id": int(request.form['fornecedor_id']) if request.form['fornecedor_id'] else None
         }
         try:
             response = requests.post(f"{API_URL}/ordens", json=dados)
@@ -40,7 +41,14 @@ def nova_ordem():
         except requests.exceptions.RequestException:
             flash("Erro ao conectar com a API", "error")
     
-    return render_template("nova_ordem.html")
+    # Carregar fornecedores para o dropdown
+    try:
+        response = requests.get(f"{API_URL}/fornecedores")
+        fornecedores = response.json() if response.status_code == 200 else []
+    except requests.exceptions.RequestException:
+        fornecedores = []
+    
+    return render_template("nova_ordem.html", fornecedores=fornecedores)
 
 @app.route('/ordens/<int:ordem_id>/deletar', methods=['POST'])
 def deletar_ordem(ordem_id):
