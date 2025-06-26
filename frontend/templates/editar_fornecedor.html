@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Fornecedor - CondoManager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3>✏️ Editar Fornecedor #{{ fornecedor.id }}</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome do Fornecedor</label>
+                        <input type="text" class="form-control" id="nome" name="nome" value="{{ fornecedor.nome }}" placeholder="Ex: João Silva Elétrica" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="especialidade" class="form-label">Especialidade</label>
+                        <select class="form-select" id="especialidade" name="especialidade" required>
+                            <option value="">Selecione...</option>
+                            <option value="Elétrica" {{ 'selected' if fornecedor.especialidade == 'Elétrica' else '' }}>Elétrica</option>
+                            <option value="Hidráulica" {{ 'selected' if fornecedor.especialidade == 'Hidráulica' else '' }}>Hidráulica</option>
+                            <option value="Pintura" {{ 'selected' if fornecedor.especialidade == 'Pintura' else '' }}>Pintura</option>
+                            <option value="Jardinagem" {{ 'selected' if fornecedor.especialidade == 'Jardinagem' else '' }}>Jardinagem</option>
+                            <option value="Limpeza" {{ 'selected' if fornecedor.especialidade == 'Limpeza' else '' }}>Limpeza</option>
+                            <option value="Segurança" {{ 'selected' if fornecedor.especialidade == 'Segurança' else '' }}>Segurança</option>
+                            <option value="Elevador" {{ 'selected' if fornecedor.especialidade == 'Elevador' else '' }}>Elevador</option>
+                            <option value="Ar Condicionado" {{ 'selected' if fornecedor.especialidade == 'Ar Condicionado' else '' }}>Ar Condicionado</option>
+                            <option value="Dedetização" {{ 'selected' if fornecedor.especialidade == 'Dedetização' else '' }}>Dedetização</option>
+                            <option value="Portaria" {{ 'selected' if fornecedor.especialidade == 'Portaria' else '' }}>Portaria</option>
+                            <option value="Outros" {{ 'selected' if fornecedor.especialidade == 'Outros' else '' }}>Outros</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="contato" class="form-label">Contato</label>
+                        <input type="text" class="form-control" id="contato" name="contato" value="{{ fornecedor.contato }}" placeholder="Ex: (11) 99999-9999 ou email@exemplo.com" required>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('listar_fornecedores') }}" class="btn btn-secondary me-md-2">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Atualizar Fornecedor</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

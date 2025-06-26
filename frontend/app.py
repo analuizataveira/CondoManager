@@ -135,6 +135,38 @@ def novo_fornecedor():
     
     return render_template("novo_fornecedor.html")
 
+@app.route('/fornecedores/<int:fornecedor_id>/editar', methods=['GET', 'POST'])
+def editar_fornecedor(fornecedor_id):
+    if request.method == 'POST':
+        dados = {
+            "nome": request.form['nome'],
+            "especialidade": request.form['especialidade'],
+            "contato": request.form['contato']
+        }
+        try:
+            response = requests.put(f"{API_URL}/fornecedores/{fornecedor_id}", json=dados)
+            if response.status_code == 200:
+                flash("Fornecedor atualizado com sucesso!", "success")
+                return redirect(url_for('listar_fornecedores'))
+            else:
+                flash("Erro ao atualizar fornecedor", "error")
+        except requests.exceptions.RequestException:
+            flash("Erro ao conectar com a API", "error")
+    
+    # Carregar dados do fornecedor atual
+    try:
+        response = requests.get(f"{API_URL}/fornecedores/{fornecedor_id}")
+        if response.status_code == 200:
+            fornecedor = response.json()
+        else:
+            flash("Fornecedor não encontrado", "error")
+            return redirect(url_for('listar_fornecedores'))
+    except requests.exceptions.RequestException:
+        flash("Erro ao conectar com a API", "error")
+        return redirect(url_for('listar_fornecedores'))
+    
+    return render_template("editar_fornecedor.html", fornecedor=fornecedor)
+
 @app.route('/fornecedores/<int:fornecedor_id>/deletar', methods=['POST'])
 def deletar_fornecedor(fornecedor_id):
     try:
