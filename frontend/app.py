@@ -3,7 +3,6 @@ import requests
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = "seu_secret_key_aqui"
 API_URL = "http://backend:8000"
 
 @app.route('/')
